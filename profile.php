@@ -1,4 +1,6 @@
 <?php
+require("function.php");
+require_once("db.php");
 session_start();
 
 if (!isset($_SESSION['user'])) {
@@ -51,5 +53,40 @@ if (!$user) {
         <p>@<?= $user['username'] ?></p>
         <p>Bio : <?= $user['biography'] ?></p>
     </div>
+    <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+  <textarea name="tweet" rows="3" cols="30"></textarea>
+  <br>
+  <input type="submit" value="Publier le tweet">
+</form>
+
+<?php
+
+// Traitement du formulaire de publication de tweet
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  // Récupérer le contenu du tweet soumis par le formulaire
+  $tweet = $_POST['tweet'];
+
+  // Enregistrer le tweet dans la base de données
+  $stmt = $db->prepare("INSERT INTO tweets (content) VALUES (:tweet)");
+  $stmt->bindParam(':tweet', $tweet);
+  if ($stmt->execute()) {
+    echo "Tweet publié avec succès";
+  } else {
+    echo "Erreur lors de la publication du tweet.";
+  }
+}
+
+// Récupérer tous les tweets de la base de données
+$stmt = $db->prepare("SELECT * FROM tweets ORDER BY id DESC");
+$stmt->execute();
+$tweets = $stmt->fetchAll();
+
+// Afficher tous les tweets sur la page
+foreach ($tweets as $tweet) {
+  echo '<div class="tweet">' . $tweet["content"] . '</div>';
+}
+
+?>
+
 </body>
 </html>
