@@ -48,7 +48,7 @@ if (!$user) {
     <div class="profile">
         <h2>Profil de <?= $user['email'] ?></h2>
         <p>Nom : <?= $user['name'] ?></p>
-        <p>Twitter : <?= $user['username'] ?></p>
+        <p>@<?= $user['username'] ?></p>
         <p>Bio : <?= $user['biography'] ?></p>
     </div>
 </body>
