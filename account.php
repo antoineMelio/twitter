@@ -6,7 +6,7 @@
   // si pas de session utilisateur, c'est qu'il n'est pas connecté
   if(empty($_SESSION["user"])) {
     // donc on redirige vers la page de login
-    header("Location: login.php");
+    // header("Location: login.php");
 
     // die permet d'arrêter l'exécution de ce script
     die();

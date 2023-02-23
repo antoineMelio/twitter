@@ -1,5 +1,5 @@
 <?php
-  require("functions.php");
+  require("function.php");
 
   // on crée un tableau d'erreur
   // cela nous permettra de les afficher ensuite dans le HTML
@@ -19,7 +19,8 @@
       }
       else {
         // cas où on peut créer le compte
-        add_user($_POST["email"], $_POST["password"]);
+        add_user($_POST["email"], $_POST["password"], $_POST["name"], $_POST["username"], $_POST["biography"]);
+        header("Location: login.php");
       }
     }
   }
@@ -53,15 +54,27 @@
     ?>
   </ul>
 
-  <form action="register.php" method="post">
-    <label for="email">Email</label>
-    <input type="email" name="email" id="email">
+  <div class="register">
+    <h2>S'inscrire</h2>
+    <form action="register.php" method="post">
+        <label for="name">Nom</label>
+        <input type="text" id="name" name="name" required>
 
-    <label for="password">Mot de passe</label>
-    <input type="password" name="password" id="password">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
 
-    <button type="submit">Créer mon compte</button>
-  </form>
+        <label for="password">Mot de passe</label>
+        <input type="password" id="password" name="password" required>
+
+        <label for="username">@</label>
+        <input type="text" id="username" name="username">
+
+        <label for="biography">Bio</label>
+        <textarea id="biography" name="biography"></textarea>
+
+        <button type="submit">Suivant</button>
+    </form>
+</div>
 
 </body>
 </html>

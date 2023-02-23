@@ -5,10 +5,10 @@ require_once("db.php");
 /**
  * Connecte l'utilisateur
  */
-function login($email) {
+function login($email, $password) {
   global $db;
 
-  $q = $db->prepare("SELECT email, password FROM user WHERE email = :email");
+  $q = $db->prepare("SELECT id, email, password FROM user WHERE email = :email");
   
   $q->bindParam(":email", $email);
 
@@ -16,8 +16,13 @@ function login($email) {
 
   $user = $q->fetch();
 
+  echo $password;
+  echo "<br>";
+  $user["password"];
+
+
   // si ce n'est pas le bon mot de passe, on retourne faux
-  if(!password_verify($_POST["password"], $user["password"])) {
+  if(!password_verify($password, $user["password"])) {
     return false;
   }
 
@@ -29,15 +34,18 @@ function login($email) {
 /**
  * Crée un utilisateur
  */
-function add_user($email, $password) {
+function add_user($email, $password, $name, $username, $biography) {
   global $db;
 
   $encrypted_password = password_hash($password, PASSWORD_DEFAULT);
 
-  $q = $db->prepare("INSERT INTO user(email, password) VALUES(:email, :password)");
+  $q = $db->prepare("INSERT INTO user(email, password, name, username, biography) VALUES(:email, :password, :name, :username, :biography)");
   
   $q->bindParam(":email", $email);
   $q->bindParam(":password", $encrypted_password);
+  $q->bindParam(":name", $name);
+  $q->bindParam(":username", $username);
+  $q->bindParam(":biography", $biography);
 
   $q->execute();
 }
