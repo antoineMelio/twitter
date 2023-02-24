@@ -1,8 +1,8 @@
 <?php
 
-function check_member_exists($email) {
-  global $conn;
+require_once('db.php');
 
+function check_member_exists($conn, $email) {
   $stmt = $conn->prepare("SELECT * FROM user WHERE email = ?");
   $stmt->bind_param("s", $email);
   $stmt->execute();
@@ -11,9 +11,7 @@ function check_member_exists($email) {
   return $result->num_rows > 0;
 }
 
-function login($email, $password) {
-  global $conn;
-
+function login($conn, $email, $password) {
   $stmt = $conn->prepare("SELECT * FROM user WHERE email = ? AND password = ?");
   $stmt->bind_param("ss", $email, $password);
   $stmt->execute();
@@ -26,17 +24,24 @@ function login($email, $password) {
   }
 }
 
-function postTweet($user_id, $tweet) {
-  global $conn;
-
+function postTweet($conn, $user_id, $tweet) {
   $stmt = $conn->prepare("INSERT INTO tweets (user_id, tweet) VALUES (?, ?)");
   $stmt->bind_param("is", $user_id, $tweet);
   $stmt->execute();
 }
 
+function getTweetsByUserId($conn, $user_id) {
+  $stmt = $conn->prepare("SELECT * FROM tweets WHERE user_id = ?");
+  $stmt->bind_param("i", $user_id);
+  $stmt->execute();
+  $result = $stmt->get_result();
+
+  return $result->fetch_all(MYSQLI_ASSOC);
+}
+
 function getUserById($conn, $user_id) {
-  $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
-  $stmt->bind_param("i", intval($user_id)); // convertir en entier
+  $stmt = $conn->prepare("SELECT * FROM user WHERE id = ?");
+  $stmt->bind_param("i", $user_id);
   $stmt->execute();
   $result = $stmt->get_result();
   return $result->fetch_assoc();
