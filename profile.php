@@ -54,10 +54,10 @@ if (!$user) {
         <p>Bio : <?= $user['biography'] ?></p>
     </div>
     <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-  <textarea name="tweet" rows="3" cols="30"></textarea>
-  <br>
-  <input type="submit" value="Publier le tweet">
-</form>
+        <textarea name="tweet" rows="3" cols="30"></textarea>
+        <br>
+        <input type="submit" value="Publier le tweet">
+    </form>
 
 <?php
 
@@ -85,6 +85,8 @@ $tweets = $stmt->fetchAll();
 foreach ($tweets as $tweet) {
   echo '<div class="tweet">' . $tweet["content"] . '</div>';
 }
+
+// ALTER TABLE tweets ADD  FOREIGN KEY (user_id) REFERENCES user(id)
 
 ?>
 
