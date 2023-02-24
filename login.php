@@ -1,9 +1,11 @@
 <?php
-  require("function.php");
+  require_once("db.php");
+  require_once("function.php");
 
   session_start();
 
   $errors = array();
+
   if(!empty($_POST)) {
     if(empty($_POST["email"]) || empty($_POST["password"])) {
       array_push($errors, "Merci de remplir tous les champs.");
@@ -17,8 +19,9 @@
         $user = login($_POST["email"], $_POST["password"]);
 
         if($user) {
-          $_SESSION["user"] = $user;
+          $_SESSION["user_id"] = $user['id'];
           header("Location: profile.php");
+          exit;
         } else {
           array_push($errors, "Mauvais email / mot de passe.");
         }
