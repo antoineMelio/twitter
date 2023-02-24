@@ -1,86 +1,44 @@
 <?php
-// le 'once' permet de ne pas réimporter db.php si jamais il a déjà été importé avant
-require_once("db.php");
 
-/**
- * Connecte l'utilisateur
- */
+function check_member_exists($email) {
+  global $conn;
+
+  $stmt = $conn->prepare("SELECT * FROM user WHERE email = ?");
+  $stmt->bind_param("s", $email);
+  $stmt->execute();
+  $result = $stmt->get_result();
+
+  return $result->num_rows > 0;
+}
+
 function login($email, $password) {
-  global $db;
+  global $conn;
 
-  $q = $db->prepare("SELECT id, email, password FROM user WHERE email = :email");
-  
-  $q->bindParam(":email", $email);
+  $stmt = $conn->prepare("SELECT * FROM user WHERE email = ? AND password = ?");
+  $stmt->bind_param("ss", $email, $password);
+  $stmt->execute();
+  $result = $stmt->get_result();
 
-  $q->execute();
-
-  $user = $q->fetch();
-
-  echo $password;
-  echo "<br>";
-  $user["password"];
-
-
-  // si ce n'est pas le bon mot de passe, on retourne faux
-  if(!password_verify($password, $user["password"])) {
+  if($result->num_rows === 1) {
+    return $result->fetch_assoc();
+  } else {
     return false;
   }
-
-  // sinon, on retourne le $user
-  // cela permettra de le stocker dans la $_SESSION
-  return $user;
 }
 
-/**
- * Crée un utilisateur
- */
-function add_user($email, $password, $name, $username, $biography) {
-  global $db;
+function postTweet($user_id, $tweet) {
+  global $conn;
 
-  $encrypted_password = password_hash($password, PASSWORD_DEFAULT);
-
-  $q = $db->prepare("INSERT INTO user(email, password, name, username, biography) VALUES(:email, :password, :name, :username, :biography)");
-  
-  $q->bindParam(":email", $email);
-  $q->bindParam(":password", $encrypted_password);
-  $q->bindParam(":name", $name);
-  $q->bindParam(":username", $username);
-  $q->bindParam(":biography", $biography);
-
-  $q->execute();
-}
-
-/**
- * Vérifie si le compte existe déjà
- */
-function check_member_exists($email) {
-  global $db;
-
-  $q = $db->prepare("SELECT id FROM user WHERE email = :email");
-  
-  $q->bindParam(":email", $email);
-
-  $q->execute();
-
-  // rowCount retourne le nombre de résultats retournés par la requête 
-  return $q->rowCount() > 0;
+  $stmt = $conn->prepare("INSERT INTO tweets (user_id, tweet) VALUES (?, ?)");
+  $stmt->bind_param("is", $user_id, $tweet);
+  $stmt->execute();
 }
 
 function getUserById($conn, $user_id) {
-  $query = "SELECT * FROM user WHERE id = '$user_id'";
-  $result = mysqli_query($conn, $query);
-  return mysqli_fetch_assoc($result);
+  $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
+  $stmt->bind_param("i", intval($user_id)); // convertir en entier
+  $stmt->execute();
+  $result = $stmt->get_result();
+  return $result->fetch_assoc();
 }
-
-function postTweet($conn, $user_id, $tweet) {
-  $query = "INSERT INTO tweets (user_id, tweet) VALUES ('$user_id', '$tweet')";
-  mysqli_query($conn, $query);
-}
-
-function getTweetsByUserId($conn, $user_id) {
-  $query = "SELECT * FROM tweets WHERE user_id = '$user_id' ORDER BY date";
-  }
-
-?>
-
 

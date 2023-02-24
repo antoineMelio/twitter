@@ -1,35 +1,34 @@
 <?php
-  require_once("db.php");
-  require_once("function.php");
+require_once('db.php');
+require_once('function.php');
 
-  session_start();
+session_start();
 
-  $errors = array();
+$errors = array();
+if(!empty($_POST)) {
+  if(empty($_POST["email"]) || empty($_POST["password"])) {
+    array_push($errors, "Merci de remplir tous les champs.");
+  }
 
-  if(!empty($_POST)) {
-    if(empty($_POST["email"]) || empty($_POST["password"])) {
-      array_push($errors, "Merci de remplir tous les champs.");
+  if(!empty($_POST["email"]) && !empty($_POST["password"])) {
+    if(!check_member_exists($_POST["email"])) {
+      array_push($errors, "Ce compte n'existe pas.");
     }
-  
-    if(!empty($_POST["email"]) && !empty($_POST["password"])) {
-      if(!check_member_exists($_POST["email"])) {
-        array_push($errors, "Ce compte n'existe pas.");
-      }
-      else {
-        $user = login($_POST["email"], $_POST["password"]);
+    else {
+      $user = login($_POST["email"], $_POST["password"]);
 
-        if($user) {
-          $_SESSION["user_id"] = $user['id'];
-          header("Location: profile.php");
-          exit;
-        } else {
-          array_push($errors, "Mauvais email / mot de passe.");
-        }
+      if($user) {
+        $_SESSION["user_id"] = $user["id"];
+        header("Location: profile.php");
+        exit;
+      } else {
+        array_push($errors, "Mauvais email / mot de passe.");
       }
     }
   }
-?>
+}
 
+?>
 <!doctype html>
 <html lang="fr">
 <head>

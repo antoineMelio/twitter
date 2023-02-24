@@ -1,11 +1,14 @@
 <?php
-  // j'ouvre et me connecte à la bdd
- try {
-    $db = new PDO("mysql:host=localhost;dbname=twitter;port=8889", "root", "root");
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, FALSE);
-} catch (PDOException $e) {
-    echo "General Error: The user could not be added.<br>".$e->getMessage();
+
+$host = 'localhost';
+$username = 'root';
+$password = 'root';
+$database = 'twitter';
+$port = 8889;
+
+$conn = new mysqli($host, $username, $password, $database, $port);
+
+if ($conn->connect_error) {
+  die('Connection failed: ' . $conn->connect_error);
 }
 
-?>

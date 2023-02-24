@@ -32,22 +32,4 @@ $user = getUserById($conn, $user_id);
   </head>
   <body>
     <div class="container">
-      <h1>Profile</h1>
-      <p>Welcome, <?php echo $user['username']; ?>!</p>
-      <form method="post">
-        <label for="tweet">What's happening?</label>
-        <input type="text" name="tweet" id="tweet">
-        <button type="submit">Tweet</button>
-      </form>
-      <h2>Tweets</h2>
-      <?php while($tweet = mysqli_fetch_assoc($tweets)): ?>
-        <div class="tweet">
-          <div class="content">
-            <p><?php echo $tweet['tweet']; ?></p>
-            <small><?php echo $tweet['date']; ?></small>
-          </div>
-        </div>
-      <?php endwhile; ?>
-    </div>
-  </body>
-</html>
+      <h1>Profile</h1
