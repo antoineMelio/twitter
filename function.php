@@ -65,4 +65,22 @@ function check_member_exists($email) {
   // rowCount retourne le nombre de résultats retournés par la requête 
   return $q->rowCount() > 0;
 }
+
+function getUserById($conn, $user_id) {
+  $query = "SELECT * FROM user WHERE id = '$user_id'";
+  $result = mysqli_query($conn, $query);
+  return mysqli_fetch_assoc($result);
+}
+
+function postTweet($conn, $user_id, $tweet) {
+  $query = "INSERT INTO tweets (user_id, tweet) VALUES ('$user_id', '$tweet')";
+  mysqli_query($conn, $query);
+}
+
+function getTweetsByUserId($conn, $user_id) {
+  $query = "SELECT * FROM tweets WHERE user_id = '$user_id' ORDER BY date";
+  }
+
 ?>
+
+
