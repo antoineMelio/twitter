@@ -25,10 +25,13 @@ function login($conn, $email, $password) {
 }
 
 function postTweet($conn, $user_id, $tweet) {
-  $stmt = $conn->prepare("INSERT INTO tweets (user_id, tweet) VALUES (?, ?)");
-  $stmt->bind_param("is", $user_id, $tweet);
-  $stmt->execute();
+    $stmt = $conn->prepare("INSERT INTO tweets (user_id, tweet) VALUES (?, ?)");
+    $stmt->bind_param("is", $user_id, $tweet);
+    $stmt->execute();
+    $stmt->close();
 }
+
+
 
 function getTweetsByUserId($conn, $user_id) {
   $stmt = $conn->prepare("SELECT * FROM tweets WHERE user_id = ?");
