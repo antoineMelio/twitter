@@ -24,12 +24,13 @@ function login($conn, $email, $password) {
   }
 }
 
-function postTweet($conn, $user_id, $content) {
-    $sql = "INSERT INTO tweets (user_id, content, date) VALUES (?, ?, NOW())";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("is", $user_id, $content);
-    return $stmt->execute();
+function postTweet($conn, $userid, $content) {
+    $stmt = $conn->prepare("INSERT INTO tweets (user_id, content) VALUES (?, ?)");
+    $stmt->bind_param("is", $userid, $content);
+    $stmt->execute();
+    $stmt->close();
 }
+
 
 
 

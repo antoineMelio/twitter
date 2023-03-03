@@ -26,55 +26,35 @@
   }
 ?>
 
-<!doctype html>
-<html lang="fr">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <!-- utile pour le responsive -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- titre de la page -->
-  <title>Mon super titre</title>
-  <!-- lien vers le fichier de style CSS -->
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Inscription - Twitter Clone</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- le contenu de votre site -->
-  <h1>S'inscrire</h1>
-
-  <!-- on affiche les erreurs s'il y en a -->
-  <ul class="errors">
-    <?php
-      for($i = 0; $i < count($errors); $i++) {
-        ?>
-
-        <li><?php echo $errors[$i]; ?></li>
-
-        <?php
-      }
-    ?>
-  </ul>
-
-  <div class="register">
-    <h2>S'inscrire</h2>
-    <form action="register.php" method="post">
-        <label for="name">Nom</label>
-        <input type="text" id="name" name="name" required>
-
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
-
-        <label for="password">Mot de passe</label>
-        <input type="password" id="password" name="password" required>
-
-        <label for="username">@</label>
-        <input type="text" id="username" name="username">
-
-        <label for="biography">Bio</label>
-        <textarea id="biography" name="biography"></textarea>
-
-        <button type="submit">Suivant</button>
-    </form>
-</div>
-
+    <header>
+        <h1>Twitter Clone</h1>
+        <nav>
+            <ul>
+                <li><a href="index.php">Accueil</a></li>
+                <li><a href="profile.php">Profil</a></li>
+                <li><a href="logout.php">Déconnexion</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Inscription</h2>
+        <form action="register.php" method="POST">
+            <label for="username">Nom d'utilisateur:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="password">Mot de passe:</label>
+            <input type="password" id="password" name="password" required>
+            <input type="submit" value="S'inscrire">
+        </form>
+    </main>
 </body>
 </html>

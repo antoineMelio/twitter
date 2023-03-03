@@ -28,33 +28,24 @@ $user = getUserById($conn, $user_id);
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>Twitter Clone - Profil</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="UTF-8">
+    <title>Profil - Twitter</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="container">
-    <h1>Profil</h1>
-    <p>Bienvenue, <?php echo $user['username']; ?>!</p>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.php">Accueil</a></li>
+                <li><a href="timeline.php">Timeline</a></li>
+                <li><a href="profile.php" class="active">Profil</a></li>
+                <li><a href="logout.php">Déconnexion</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="profile-info">
+            <h1><?= $user['
 
-    <!-- Formulaire de tweet -->
-    <form method="post">
-        <label for="tweet">Quoi de neuf?</label>
-        <input type="text" name="tweet" id="tweet">
-        <button type="submit">Tweeter</button>
-    </form>
-
-    <h2>Tweets</h2>
-
-    <?php foreach ($tweets as $tweet) { ?>
-        <div class="tweet">
-            <div class="content">
-                <p><?php echo $tweet['tweet']; ?></p>
-                <small><?php echo $tweet['date']; ?></small>
-            </div>
-        </div>
-    <?php } ?>
-</div>
-</body>
-</html>

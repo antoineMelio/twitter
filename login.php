@@ -29,42 +29,34 @@ if(!empty($_POST)) {
 }
 
 ?>
-<!doctype html>
-<html lang="fr">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <!-- utile pour le responsive -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- titre de la page -->
-  <title>Mon super titre</title>
-  <!-- lien vers le fichier de style CSS -->
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Login - Twitter Clone</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- le contenu de votre site -->
-  <h1>Se connecter</h1>
-
-  <ul class="errors">
-    <?php
-      for($i = 0; $i < count($errors); $i++) {
-        ?>
-
-        <li><?php echo $errors[$i]; ?></li>
-
-        <?php
-      }
-    ?>
-  </ul>
-
-  <form action="login.php" method="post">
-    <label for="email">Email</label>
-    <input type="email" name="email" id="email">
-
-    <label for="password">Mot de passe</label>
-    <input type="password" name="password" id="password">
-
-    <button type="submit">Se connecter</button>
-  </form>
-
+    <header>
+        <h1>Twitter Clone</h1>
+        <nav>
+            <ul>
+                <li><a href="index.php">Accueil</a></li>
+                <li><a href="profile.php">Profil</a></li>
+                <li><a href="logout.php">Déconnexion</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Connexion</h2>
+        <form action="login.php" method="POST">
+            <label for="username">Nom d'utilisateur:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Mot de passe:</label>
+            <input type="password" id="password" name="password" required>
+            <input type="submit" value="Se connecter">
+        </form>
+    </main>
 </body>
 </html>
+
