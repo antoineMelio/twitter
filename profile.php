@@ -13,11 +13,12 @@ $user_id = $_SESSION['user_id'];
 
 // Traitement du formulaire de tweet
 if (isset($_POST['tweet']) && !empty($_POST['tweet'])) {
-    $tweet = htmlspecialchars($_POST['tweet'], ENT_QUOTES);
-    postTweet($conn, $user_id, $tweet);
+    $tweet_content = $_POST['tweet'];
+    postTweet($conn, $user_id, $tweet_content);
     header('Location: profile.php');
     exit;
 }
+
 
 // Récupération des tweets de l'utilisateur connecté
 $tweets = getTweetsByUserId($conn, $user_id);
