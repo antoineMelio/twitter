@@ -29,8 +29,8 @@ function postTweet($conn, $user_id, $tweet) {
     $stmt = $conn->prepare($query);
     $stmt->bind_param("is", $user_id, $tweet);
     $stmt->execute();
-    $stmt->close();
 }
+
 
 
 
